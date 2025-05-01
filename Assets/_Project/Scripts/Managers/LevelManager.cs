@@ -1,16 +1,26 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public List<Level> levels;
+
+    public Level _curLevel;
+    internal void RestartLevelManager()
     {
-        
+        DeleteCurrentLevel();
+
+        var newLevel = Instantiate(levels[0]);
+        newLevel.transform.position = Vector3.zero;
+        _curLevel = newLevel;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void DeleteCurrentLevel()
     {
-        
+        if (_curLevel != null)
+        {
+            Destroy(_curLevel.gameObject);
+        }
     }
 }
