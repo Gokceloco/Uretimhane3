@@ -467,8 +467,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ceb1d935841974497384d0dc564d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelNo: 1
   levels:
   - {fileID: 2750330689263065559, guid: 51894f20af5beea448040600d83490f2, type: 3}
+  - {fileID: 2750330689263065559, guid: 3e9d52ca5e923e2409639d2ff732617a, type: 3}
+  - {fileID: 2750330689263065559, guid: b359be4be3174fc4a9b93b1a7ea60e29, type: 3}
+  - {fileID: 2750330689263065559, guid: f67121e24208b7847b9b4632cdef8740, type: 3}
+  - {fileID: 2750330689263065559, guid: 4afffd4876a9a5d41afc0da9a8b4b568, type: 3}
+  _curLevel: {fileID: 0}
 --- !u!1 &592746043
 GameObject:
   m_ObjectHideFlags: 0

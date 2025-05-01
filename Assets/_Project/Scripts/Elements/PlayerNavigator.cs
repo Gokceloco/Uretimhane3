@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerNavigator : MonoBehaviour
@@ -49,5 +50,10 @@ public class PlayerNavigator : MonoBehaviour
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, jumpPower, _rb.linearVelocity.z);
         }
+    }
+
+    public void ResetPosition()
+    {
+        _rb.position = Vector3.zero;
     }
 }
