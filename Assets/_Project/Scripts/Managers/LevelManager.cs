@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public int levelNo;
+    [NonSerialized] public int levelNo;
 
     public List<Level> levels;
 
-    public Level _curLevel;
+    private Level _curLevel;
     internal void RestartLevelManager()
     {
         DeleteCurrentLevel();
@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
 
     private void CreateNewLevel()
     {
+        levelNo = Math.Max(levelNo, 1);
         var newLevel = Instantiate(levels[levelNo - 1]);
         newLevel.transform.position = Vector3.zero;
         _curLevel = newLevel;

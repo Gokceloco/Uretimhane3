@@ -6,16 +6,39 @@ public class PlayerNavigator : MonoBehaviour
     public float speed;
     public float jumpPower;
 
+    public bool playerLooksAtMouse;
+    public LayerMask lookAtLayerMask;
+
     private Rigidbody _rb;
+    private Transform _transform;
+    private bool _isGrounded;
 
     private void Awake()
     {
+        _transform = transform;
         _rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         MovePlayerWithKeys();
+
+        if (playerLooksAtMouse)
+        {
+            LookAtMouse();
+        }
+    }
+
+    private void LookAtMouse()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 50, lookAtLayerMask))
+        {
+            var lookPos = hit.point;
+            lookPos.y = _transform.position.y;
+            _transform.LookAt(lookPos);
+        }
     }
 
     void MovePlayerWithKeys()
@@ -46,7 +69,9 @@ public class PlayerNavigator : MonoBehaviour
 
         _rb.linearVelocity = direction.normalized * speed + yVelocity;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        _isGrounded = Physics.Raycast(_transform.position + Vector3.up * .1f, Vector3.down, 1, lookAtLayerMask);
+
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, jumpPower, _rb.linearVelocity.z);
         }
