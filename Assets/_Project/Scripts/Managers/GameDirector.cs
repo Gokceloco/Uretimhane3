@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
+    public static GameDirector instance;
+
     public LevelManager levelManager;
     public Player player;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -49,5 +56,15 @@ public class GameDirector : MonoBehaviour
             levelManager.levelNo -= 1;
         }
         RestartLevel();
+    }
+
+    public void Win()
+    {
+        Invoke(nameof(LoadNextLevel), 1f);
+    }
+
+    public void Lose()
+    {
+
     }
 }
