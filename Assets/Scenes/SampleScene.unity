@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 153330324}
   - component: {fileID: 153330325}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,9 +518,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 2750330689263065559, guid: 51894f20af5beea448040600d83490f2, type: 3}
-  - {fileID: 2750330689263065559, guid: 3e9d52ca5e923e2409639d2ff732617a, type: 3}
+  - {fileID: 5417762721729868640, guid: 3e9d52ca5e923e2409639d2ff732617a, type: 3}
   - {fileID: 2750330689263065559, guid: b359be4be3174fc4a9b93b1a7ea60e29, type: 3}
-  - {fileID: 2750330689263065559, guid: f67121e24208b7847b9b4632cdef8740, type: 3}
+  - {fileID: 7430226755867646217, guid: f67121e24208b7847b9b4632cdef8740, type: 3}
   - {fileID: 2750330689263065559, guid: 4afffd4876a9a5d41afc0da9a8b4b568, type: 3}
 --- !u!1 &592746043
 GameObject:
@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 592746044}
   - component: {fileID: 592746046}
   - component: {fileID: 592746045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 930430294}
   - component: {fileID: 930430296}
   - component: {fileID: 930430295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1163420563}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -787,7 +787,7 @@ GameObject:
   - component: {fileID: 1530282544}
   - component: {fileID: 1530282543}
   - component: {fileID: 1530282542}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
