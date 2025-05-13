@@ -6,6 +6,7 @@ public class GameDirector : MonoBehaviour
     public static GameDirector instance;
 
     public LevelManager levelManager;
+    public CoinManager coinManager;
     public Player player;
 
     private void Awake()
@@ -58,7 +59,7 @@ public class GameDirector : MonoBehaviour
         RestartLevel();
     }
 
-    public void Win()
+    public void LevelCompleted()
     {
         Invoke(nameof(LoadNextLevel), 1f);
     }
