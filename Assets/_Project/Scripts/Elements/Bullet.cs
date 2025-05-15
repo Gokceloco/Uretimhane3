@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviour
     private Transform _transform;
     private Weapon _weapon;
 
+    public Color enemyImpactParticleColor;
+    public Color groundImpactParticleColor;
+
     private void Awake()
     {
         _transform = transform;
@@ -33,6 +36,12 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().GetHit(damage);
+            GameDirector.instance.fXManager.PlayBulletImpactFX(_transform.position, _transform.forward, enemyImpactParticleColor);
+            Destroy(gameObject);
+        }
+        if (other.CompareTag("Ground"))
+        {
+            GameDirector.instance.fXManager.PlayBulletImpactFX(_transform.position, _transform.forward, groundImpactParticleColor);
             Destroy(gameObject);
         }
     }

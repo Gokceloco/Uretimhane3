@@ -909,6 +909,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930430293}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1154294173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1154294174}
+  - component: {fileID: 1154294175}
+  m_Layer: 0
+  m_Name: FXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1154294174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154294173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2030871575}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1154294175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154294173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40cacdd1e4adecf4c85c247a0d6ce6d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinCollectedPS: {fileID: 4633371791040301001, guid: fe640ef96e7169a458bf7694cec7f88b, type: 3}
+  serumCollectedPS: {fileID: 4633371791040301001, guid: a5893f0e4354cc846ae572dc965bf081, type: 3}
+  bulletCollectedPS: {fileID: 4633371791040301001, guid: a7cce621241c61f42b1dccef8a5537b1, type: 3}
 --- !u!1 &1163420562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,6 +1135,7 @@ Transform:
   m_Children:
   - {fileID: 486617704}
   - {fileID: 76601908}
+  - {fileID: 1154294174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2030871576
@@ -1104,6 +1152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 486617705}
   coinManager: {fileID: 76601909}
+  fXManager: {fileID: 1154294175}
   player: {fileID: 1530282543}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -7,6 +7,7 @@ public class GameDirector : MonoBehaviour
 
     public LevelManager levelManager;
     public CoinManager coinManager;
+    public FXManager fXManager;
     public Player player;
 
 

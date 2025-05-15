@@ -14,6 +14,7 @@ public class Serum : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameDirector.instance.LevelCompleted();
+            GameDirector.instance.fXManager.PlaySerumCollectedFX(transform.position);
             gameObject.SetActive(false);
         }
     }
