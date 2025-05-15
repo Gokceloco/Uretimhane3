@@ -9,6 +9,7 @@ public class GameDirector : MonoBehaviour
     public CoinManager coinManager;
     public Player player;
 
+
     private void Awake()
     {
         instance = this;
