@@ -16,14 +16,20 @@ public class Enemy : MonoBehaviour
     private Transform _transform;
 
     public float attackRate;
+    public float attackRange;
     private float _attackTimer;
     private HealthBar _healthBar;
+
+    private Animator _animator;
+
+    public float angleThreshold;
 
     private void Awake()
     {
         _navAgent = GetComponent<NavMeshAgent>();
         _transform = transform;
         _healthBar = GetComponentInChildren<HealthBar>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void Start()
@@ -31,29 +37,32 @@ public class Enemy : MonoBehaviour
         _player = GameDirector.instance.player;
         _currentHealth = startHealth;
         _navAgent.isStopped = true;
+        _healthBar.UpdateHealthBar(1);
     }
 
     private void Update()
     {
         var distanceToPlayer = Vector3.Distance(_player.transform.position, _transform.position);
-        if (distanceToPlayer < 3.5)
+
+        
+
+        if (distanceToPlayer < attackRange)
         {
             enemyState = EnemyState.Attacking;
             _navAgent.isStopped = true;
-
             if (_attackTimer < attackRate + 1)
             {
                 _attackTimer += Time.deltaTime;
             }
-
             if (_attackTimer > attackRate) 
             {
                 Attack();
             }
         }
-        else if (distanceToPlayer < 13)
+        else if (distanceToPlayer < 20 && enemyState != EnemyState.Walking)
         {
             StartWalking();
+            _attackTimer = attackRate;
         }
 
         if (enemyState == EnemyState.Walking)
@@ -65,13 +74,14 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         print("In Attack");
+        _animator.SetTrigger("Attack");
         _attackTimer = 0;
-        Invoke(nameof(StartWalking), 2);
     }
 
     void StartWalking()
     {
         enemyState = EnemyState.Walking;
+        _animator.SetTrigger("Walk");
         _navAgent.isStopped = false;
     }
 
@@ -79,7 +89,7 @@ public class Enemy : MonoBehaviour
     {
         _currentHealth -= damage;
         _healthBar.UpdateHealthBar((float)_currentHealth / startHealth);
-        if (_currentHealth < 0 && enemyState != EnemyState.Dead)
+        if (_currentHealth <= 0 && enemyState != EnemyState.Dead)
         {
             Die();
         }
@@ -89,6 +99,15 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
         enemyState = EnemyState.Dead;
+    }
+
+    internal void AttackCompleted()
+    {
+        var angle = Vector3.Angle(_transform.position - _player.transform.position, _transform.forward);
+        if (angle > angleThreshold)
+        {
+            _player.GetHit();
+        }
     }
 }
 public enum EnemyState

@@ -18,4 +18,8 @@ public class Serum : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }

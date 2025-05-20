@@ -9904,7 +9904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  range: 50
+  range: 20
   damage: 1
   enemyImpactParticleColor: {r: 1, g: 0.3066038, b: 0.3066038, a: 1}
   groundImpactParticleColor: {r: 1, g: 0.9454185, b: 0, a: 1}

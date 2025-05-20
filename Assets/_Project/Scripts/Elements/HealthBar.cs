@@ -12,6 +12,19 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthBar(float ratio)
     {
+        if (ratio >= 1)
+        {
+            gameObject.SetActive(false);
+        }
+        else if (ratio <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+
         fillBarPrent.localScale = new Vector3(ratio, 1, 1);
     }
 
