@@ -13,10 +13,13 @@ public class PlayerNavigator : MonoBehaviour
     private Transform _transform;
     private bool _isGrounded;
 
+    private PlayerAnimator _playerAnimator;
+
     private void Awake()
     {
         _transform = transform;
         _rb = GetComponent<Rigidbody>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -74,6 +77,14 @@ public class PlayerNavigator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, jumpPower, _rb.linearVelocity.z);
+        }
+        if (direction.magnitude > .01f)
+        {
+            _playerAnimator.PlayRunAnimation();
+        }
+        else
+        {
+            _playerAnimator.PlayIdleAnimation();
         }
     }
 

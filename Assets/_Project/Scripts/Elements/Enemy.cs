@@ -1,28 +1,32 @@
-using System;
+using DG.Tweening;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Properties")]
     public EnemyState enemyState;
     public int startHealth;
-
-    private int _currentHealth;
-
-    private NavMeshAgent _navAgent;
-
-    private Player _player;
-    private Transform _transform;
-
     public float attackRate;
     public float attackRange;
+    public float angleThreshold;
+
+    [Header("Elements")]
+    public Collider deadCollider;
+    public List<Light> eyeLights;
+
+    private Collider _aliveCollider;
+    private int _currentHealth;
+    private NavMeshAgent _navAgent;
+    private Player _player;
+    private Transform _transform;    
     private float _attackTimer;
     private HealthBar _healthBar;
-
-    private Animator _animator;
-
-    public float angleThreshold;
+    private Animator _animator;    
+    private bool _isAttackInProgress; 
 
     private void Awake()
     {
@@ -30,6 +34,7 @@ public class Enemy : MonoBehaviour
         _transform = transform;
         _healthBar = GetComponentInChildren<HealthBar>();
         _animator = GetComponentInChildren<Animator>();
+        _aliveCollider = GetComponent<Collider>();
     }
 
     public void Start()
@@ -42,9 +47,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        var distanceToPlayer = Vector3.Distance(_player.transform.position, _transform.position);
-
-        
+        if (enemyState == EnemyState.Dead)
+        {
+            return;
+        }
+        var distanceToPlayer = Vector3.Distance(_player.transform.position, _transform.position);        
 
         if (distanceToPlayer < attackRange)
         {
@@ -59,7 +66,7 @@ public class Enemy : MonoBehaviour
                 Attack();
             }
         }
-        else if (distanceToPlayer < 20 && enemyState != EnemyState.Walking)
+        else if (distanceToPlayer < 20 && enemyState != EnemyState.Walking && !_isAttackInProgress)
         {
             StartWalking();
             _attackTimer = attackRate;
@@ -70,12 +77,21 @@ public class Enemy : MonoBehaviour
             _navAgent.SetDestination(_player.transform.position);
         }
     }
-
     private void Attack()
     {
-        print("In Attack");
+        _isAttackInProgress = true;
         _animator.SetTrigger("Attack");
         _attackTimer = 0;
+    }
+    internal void AttackCompleted()
+    {
+        _isAttackInProgress = false;
+        var angle = Vector3.Angle(_transform.position - _player.transform.position, _transform.forward);
+        var distance = Vector3.Distance(_transform.position, _player.transform.position);
+        if (angle > angleThreshold && distance < attackRange)
+        {
+            _player.GetHit();
+        }
     }
 
     void StartWalking()
@@ -96,18 +112,50 @@ public class Enemy : MonoBehaviour
     }
 
     private void Die()
-    {
-        Destroy(gameObject);
+    {      
+        _navAgent.isStopped = true;
+        _navAgent.enabled = false;
+        GetComponent<Rigidbody>().useGravity = false;
+        Destroy(gameObject, 5);
+        if (Random.value < .5f)
+        {
+            _animator.SetTrigger("FallBack1");
+        }
+        else
+        {
+            _animator.SetTrigger("FallBack2");
+        }
+        _transform.LookAt(_player.transform.position);
         enemyState = EnemyState.Dead;
+        DisableAliveCollider();        
+        Invoke(nameof(ExpireEnemy), 3);
+        foreach (var l in eyeLights)
+        {
+            l.DOIntensity(0,1f);
+        }
     }
 
-    internal void AttackCompleted()
+    void ExpireEnemy()
     {
-        var angle = Vector3.Angle(_transform.position - _player.transform.position, _transform.forward);
-        if (angle > angleThreshold)
-        {
-            _player.GetHit();
-        }
+        var rb = GetComponent<Rigidbody>();
+
+        rb.constraints = RigidbodyConstraints.FreezeRotation
+            | RigidbodyConstraints.FreezePositionX
+            | RigidbodyConstraints.FreezePositionZ;
+
+        deadCollider.enabled = false;
+    }
+
+    private void DisableAliveCollider()
+    {
+        _aliveCollider.enabled = false;
+        GetComponent<Rigidbody>().useGravity = true;
+        deadCollider.enabled = true;
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }
 public enum EnemyState

@@ -10,7 +10,6 @@ public class EnemyEventHandler : MonoBehaviour
     }
     public void AttackPlayer()
     {
-        print("In Attack Player");
         _enemy.AttackCompleted();
     }
 }

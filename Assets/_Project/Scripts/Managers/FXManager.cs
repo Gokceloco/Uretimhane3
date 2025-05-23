@@ -4,7 +4,7 @@ public class FXManager : MonoBehaviour
 {
     public ParticleSystem coinCollectedPS;
     public ParticleSystem serumCollectedPS;
-    public ParticleSystem bulletCollectedPS;
+    public ParticleSystem bulletImpactPS;
 
     public void PlayCoinCollectedFX(Vector3 pos)
     {
@@ -20,7 +20,7 @@ public class FXManager : MonoBehaviour
     }
     public void PlayBulletImpactFX(Vector3 pos, Vector3 dir, Color color)
     {
-        var newPS = Instantiate(bulletCollectedPS);
+        var newPS = Instantiate(bulletImpactPS);
         newPS.transform.position = pos;
         newPS.transform.LookAt(pos - dir);
         var main = newPS.main;
