@@ -1,5 +1,7 @@
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -26,7 +28,14 @@ public class Enemy : MonoBehaviour
     private float _attackTimer;
     private HealthBar _healthBar;
     private Animator _animator;    
-    private bool _isAttackInProgress; 
+    private bool _isAttackInProgress;
+
+    public float flashDuration;
+    public Material flashMaterial;
+    public Material originalMaterial1;
+    public Material originalMaterial2;
+    public List<Renderer> renderers1;
+    public List<Renderer> renderers2;
 
     private void Awake()
     {
@@ -93,24 +102,24 @@ public class Enemy : MonoBehaviour
             _player.GetHit();
         }
     }
-
     void StartWalking()
     {
         enemyState = EnemyState.Walking;
         _animator.SetTrigger("Walk");
         _navAgent.isStopped = false;
+        GameDirector.instance.audioManager.PlayZomibeGrowlSFX();
     }
-
     public void GetHit(int damage)
     {
+        GameDirector.instance.audioManager.PlayGetHitSFX();
         _currentHealth -= damage;
         _healthBar.UpdateHealthBar((float)_currentHealth / startHealth);
         if (_currentHealth <= 0 && enemyState != EnemyState.Dead)
         {
             Die();
         }
+        StartCoroutine(FlashEnemyCoroutine());
     }
-
     private void Die()
     {      
         _navAgent.isStopped = true;
@@ -134,7 +143,6 @@ public class Enemy : MonoBehaviour
             l.DOIntensity(0,1f);
         }
     }
-
     void ExpireEnemy()
     {
         var rb = GetComponent<Rigidbody>();
@@ -145,7 +153,6 @@ public class Enemy : MonoBehaviour
 
         deadCollider.enabled = false;
     }
-
     private void DisableAliveCollider()
     {
         _aliveCollider.enabled = false;
@@ -153,9 +160,25 @@ public class Enemy : MonoBehaviour
         deadCollider.enabled = true;
     }
 
-    private void OnDestroy()
+    IEnumerator FlashEnemyCoroutine()
     {
-        
+        foreach (var r in renderers1)
+        {
+            r.material = flashMaterial;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = flashMaterial;
+        }
+        yield return new WaitForSeconds(flashDuration);
+        foreach (var r in renderers1)
+        {
+            r.material = originalMaterial1;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = originalMaterial2;
+        }
     }
 }
 public enum EnemyState

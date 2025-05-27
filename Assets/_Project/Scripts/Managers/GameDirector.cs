@@ -8,8 +8,10 @@ public class GameDirector : MonoBehaviour
     public LevelManager levelManager;
     public CoinManager coinManager;
     public FXManager fXManager;
+    public AudioManager audioManager;
     public Player player;
 
+    public CameraHolder cameraHolder;
 
     private void Awake()
     {

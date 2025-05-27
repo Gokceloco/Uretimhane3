@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,6 +12,11 @@ public class Weapon : MonoBehaviour
     public float attackRate;
 
     private float _attackTimer;
+
+    public ParticleSystem muzzlePS;
+    public Light weaponShootLight;
+
+    public ParticleSystem shellPS;
 
     private void Update()
     {
@@ -33,5 +39,14 @@ public class Weapon : MonoBehaviour
         newBulletTransform.LookAt(newBulletTransform.position + shootStartTransform.forward);
         newBullet.StartBullet(this);
         _attackTimer = 0;
+        GameDirector.instance.audioManager.PlayMachinegunShootSFX();
+
+        weaponShootLight.DOKill();
+        weaponShootLight.intensity = 0;
+        weaponShootLight.DOIntensity(50,.1f).SetLoops(2, LoopType.Yoyo);
+        muzzlePS.Play();
+
+        GameDirector.instance.cameraHolder.ShakeCamera(.2f,.2f);
+        shellPS.Play();
     }
 }

@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
 
     internal void GetHit()
     {
+        GameDirector.instance.audioManager.PlayGetHitSFX();
         gameObject.SetActive(false);
+        GameDirector.instance.cameraHolder.ShakeCamera(.5f, .5f);
     }
 }
