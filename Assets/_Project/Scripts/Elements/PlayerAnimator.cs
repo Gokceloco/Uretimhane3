@@ -18,7 +18,7 @@ public class PlayerAnimator : MonoBehaviour
             _animator.SetTrigger("Idle");
         }
     }
-    public void PlayRunAnimation()
+    public void PlayRunAnimation(float angle)
     {
         if (playerAnimationState != PlayerAnimationState.Run)
         {
@@ -26,6 +26,7 @@ public class PlayerAnimator : MonoBehaviour
             _animator.ResetTrigger("Idle");
             _animator.SetTrigger("Run");
         }
+        _animator.SetFloat("WalkDirectionAngle", angle);
     }
 }
 

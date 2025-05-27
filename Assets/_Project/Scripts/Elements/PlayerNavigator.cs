@@ -70,7 +70,7 @@ public class PlayerNavigator : MonoBehaviour
         yVelocity.x = 0;
         yVelocity.z = 0;
 
-        _rb.linearVelocity = direction.normalized * speed + yVelocity;
+        _rb.linearVelocity = direction.normalized * speed + yVelocity;        
 
         _isGrounded = Physics.Raycast(_transform.position + Vector3.up * .1f, Vector3.down, 1, lookAtLayerMask);
 
@@ -80,7 +80,8 @@ public class PlayerNavigator : MonoBehaviour
         }
         if (direction.magnitude > .01f)
         {
-            _playerAnimator.PlayRunAnimation();
+            var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+            _playerAnimator.PlayRunAnimation(angle);
         }
         else
         {
