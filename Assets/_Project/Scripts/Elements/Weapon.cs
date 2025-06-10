@@ -20,6 +20,10 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        if (GameDirector.instance.gameState != GameState.GamePlay)
+        {
+            return;
+        }
         if (Input.GetMouseButton(0) && _attackTimer > attackRate)
         {
             Shoot();

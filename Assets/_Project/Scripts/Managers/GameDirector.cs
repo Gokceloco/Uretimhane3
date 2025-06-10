@@ -1,17 +1,27 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
     public static GameDirector instance;
 
+    [Header("Manager")]
     public LevelManager levelManager;
     public CoinManager coinManager;
     public FXManager fXManager;
     public AudioManager audioManager;
     public Player player;
 
+    [Header("UI")]
+    public MainMenu mainMenu;
+    public PlayerHealthUI playerHealthUI;
+    public PlayerHitUI playerHitUI;
+
+
     public CameraHolder cameraHolder;
+
+    public GameState gameState;
 
     private void Awake()
     {
@@ -20,7 +30,7 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        RestartLevel();
+        gameState = GameState.MainMenu;
     }
 
     private void Update()
@@ -28,6 +38,7 @@ public class GameDirector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartLevel();
+            mainMenu.Hide();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -37,12 +48,23 @@ public class GameDirector : MonoBehaviour
         {
             LoadPreviousLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            playerHealthUI.Show();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            playerHealthUI.Hide();
+        }
     }
 
-    private void RestartLevel()
+    public void RestartLevel()
     {
+        gameState = GameState.GamePlay;
         levelManager.RestartLevelManager();
         player.RestartPlayer();
+        playerHealthUI.Show();
     }
 
     void LoadNextLevel()
@@ -72,4 +94,12 @@ public class GameDirector : MonoBehaviour
     {
 
     }
+}
+
+public enum GameState
+{
+    MainMenu,
+    GamePlay,
+    VictoryUI,
+    FailUI,
 }
