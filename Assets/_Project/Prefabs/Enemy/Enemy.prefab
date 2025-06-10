@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: 0
-  startHealth: 3
+  startHealth: 10
   attackRate: 3
   attackRange: 2.5
   angleThreshold: 100
@@ -269,6 +269,7 @@ MonoBehaviour:
   - {fileID: 4576865070985398768}
   - {fileID: 5649892975499415996}
   - {fileID: 6097889066250547685}
+  getHitStopDuration: 0.3
 --- !u!136 &5145881360774387932
 CapsuleCollider:
   m_ObjectHideFlags: 0

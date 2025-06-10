@@ -31,6 +31,8 @@ public class GameDirector : MonoBehaviour
     private void Start()
     {
         gameState = GameState.MainMenu;
+        HideInGameUI();
+
     }
 
     private void Update()
@@ -57,11 +59,21 @@ public class GameDirector : MonoBehaviour
         {
             playerHealthUI.Hide();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            mainMenu.Show();
+            mainMenu.EnableResumeButton();
+            mainMenu.startButtonTMP.text = "RESTART";
+            gameState = GameState.MainMenu;
+            HideInGameUI();
+        }
     }
 
     public void RestartLevel()
     {
         gameState = GameState.GamePlay;
+        ShowInGameUI();
         levelManager.RestartLevelManager();
         player.RestartPlayer();
         playerHealthUI.Show();
@@ -93,6 +105,15 @@ public class GameDirector : MonoBehaviour
     public void Lose()
     {
 
+    }
+
+    public void ShowInGameUI()
+    {
+        coinManager.coinUI.Show();
+    }
+    public void HideInGameUI()
+    {
+        coinManager.coinUI.Hide();
     }
 }
 
