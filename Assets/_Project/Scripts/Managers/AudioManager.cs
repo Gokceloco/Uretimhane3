@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
     public AudioSource machinegunShootAS;
+    public AudioSource shotgunShootAS;
     public AudioSource coinCollectedAS;
     public AudioSource getHitAS;
     public AudioSource zombieGrowlAS;
@@ -23,5 +25,10 @@ public class AudioManager : MonoBehaviour
     public void PlayZomibeGrowlSFX()
     {
         zombieGrowlAS.Play();
+    }
+
+    public void PlayShotgunShootSFX()
+    {
+        shotgunShootAS.Play();
     }
 }

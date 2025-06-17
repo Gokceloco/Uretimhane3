@@ -29,6 +29,11 @@ public class PlayerAnimator : MonoBehaviour
         }
         _animator.SetFloat("WalkDirectionAngle", angle);
     }
+
+    public void PlayDrawAnimation()
+    {
+        _animator.SetTrigger("SwitchWeapon");
+    }
 }
 
 public enum PlayerAnimationState

@@ -149,6 +149,14 @@ public class Enemy : MonoBehaviour
             l.DOIntensity(0,1f);
         }
         StopCoroutine(_getHitCoroutine);
+        foreach (var r in renderers1)
+        {
+            r.material = originalMaterial1;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = originalMaterial2;
+        }
     }
     void ExpireEnemy()
     {

@@ -17,6 +17,8 @@ public class GameDirector : MonoBehaviour
     public MainMenu mainMenu;
     public PlayerHealthUI playerHealthUI;
     public PlayerHitUI playerHitUI;
+    public MessageUI messageUI;
+    public InventoryUI inventoryUI;
 
 
     public CameraHolder cameraHolder;
@@ -110,10 +112,12 @@ public class GameDirector : MonoBehaviour
     public void ShowInGameUI()
     {
         coinManager.coinUI.Show();
+        inventoryUI.Show();
     }
     public void HideInGameUI()
     {
         coinManager.coinUI.Hide();
+        inventoryUI.Hide();
     }
 }
 
