@@ -33,6 +33,19 @@ public class PlayerAnimator : MonoBehaviour
     public void PlayDrawAnimation()
     {
         _animator.SetTrigger("SwitchWeapon");
+        _animator.SetLayerWeight(1, 1);
+        Invoke(nameof(SetLayer1MaskToZero), 1f);
+    }    
+
+    public void PlayThrowGrenadeAnimation()
+    {
+        _animator.SetTrigger("ThrowGrenade");
+        _animator.SetLayerWeight(1, 1);
+        Invoke(nameof(SetLayer1MaskToZero), 1f);
+    }
+    void SetLayer1MaskToZero()
+    {
+        _animator.SetLayerWeight(1, 0);
     }
 }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameDirector gameDirector;
+    private PlayerAnimator _playerAnimator;
     public int startHealth;
     private int _currentHealth;
 
@@ -19,9 +20,17 @@ public class Player : MonoBehaviour
 
     public Weapon weapon;
 
+    public Grenade grenadePrefab;
+    public float grenadeSpawnUpOffset;
+    public float grenadeSpawnLeftOffset;
+
+    public float grenadeCoolDown;
+    private float _lastGrenadeThrowTime;
+
     private void Awake()
     {
         _playerNavigator = GetComponent<PlayerNavigator>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -39,6 +48,20 @@ public class Player : MonoBehaviour
         {
             ExecuteInteractAction();
         }
+        if (Input.GetMouseButtonDown(1) && Time.time - _lastGrenadeThrowTime > grenadeCoolDown)
+        {
+            _playerAnimator.PlayThrowGrenadeAnimation();
+            Invoke(nameof(ThrowGrenade), .6f);
+            _lastGrenadeThrowTime = Time.time;
+        }
+        gameDirector.greandeCoolDownUI.UpdateCoolDownImage((Time.time - _lastGrenadeThrowTime) / grenadeCoolDown);
+    }
+
+    private void ThrowGrenade()
+    {
+        var newGrenade = Instantiate(grenadePrefab);
+        newGrenade.transform.position = transform.position + Vector3.up * grenadeSpawnUpOffset - transform.right * grenadeSpawnLeftOffset;
+        newGrenade.StartGrenade();
     }
 
     private void ExecuteInteractAction()

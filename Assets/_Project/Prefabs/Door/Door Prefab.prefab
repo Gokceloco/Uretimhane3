@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 168759889823712005}
   m_Layer: 10
   m_Name: Door Prefab
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8cce6824a856449881d1b0403eb3d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLocked: 0
   leftDoor: {fileID: 2536346424582293394}
   rightDoor: {fileID: 5879287183441265704}
   doorCloseDistance: 2.5

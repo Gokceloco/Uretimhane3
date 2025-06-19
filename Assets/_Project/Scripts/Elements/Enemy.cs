@@ -148,7 +148,10 @@ public class Enemy : MonoBehaviour
         {
             l.DOIntensity(0,1f);
         }
-        StopCoroutine(_getHitCoroutine);
+        if (_getHitCoroutine != null)
+        {
+            StopCoroutine(_getHitCoroutine);
+        }
         foreach (var r in renderers1)
         {
             r.material = originalMaterial1;

@@ -19,6 +19,7 @@ public class GameDirector : MonoBehaviour
     public PlayerHitUI playerHitUI;
     public MessageUI messageUI;
     public InventoryUI inventoryUI;
+    public GreandeCoolDownUI greandeCoolDownUI;
 
 
     public CameraHolder cameraHolder;
@@ -52,15 +53,6 @@ public class GameDirector : MonoBehaviour
         {
             LoadPreviousLevel();
         }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            playerHealthUI.Show();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            playerHealthUI.Hide();
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Time.timeScale = 0;
@@ -69,6 +61,14 @@ public class GameDirector : MonoBehaviour
             mainMenu.startButtonTMP.text = "RESTART";
             gameState = GameState.MainMenu;
             HideInGameUI();
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Time.timeScale = .25f;
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Time.timeScale = 1;
         }
     }
 
@@ -113,11 +113,13 @@ public class GameDirector : MonoBehaviour
     {
         coinManager.coinUI.Show();
         inventoryUI.Show();
+        greandeCoolDownUI.Show();
     }
     public void HideInGameUI()
     {
         coinManager.coinUI.Hide();
         inventoryUI.Hide();
+        greandeCoolDownUI.Hide();
     }
 }
 

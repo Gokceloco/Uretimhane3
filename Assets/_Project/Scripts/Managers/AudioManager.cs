@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource coinCollectedAS;
     public AudioSource getHitAS;
     public AudioSource zombieGrowlAS;
+    public AudioSource explosionAS;
 
     public void PlayMachinegunShootSFX()
     {
@@ -30,5 +31,10 @@ public class AudioManager : MonoBehaviour
     public void PlayShotgunShootSFX()
     {
         shotgunShootAS.Play();
+    }
+
+    public void PlayExplosionSFX()
+    {
+        explosionAS.Play();
     }
 }
