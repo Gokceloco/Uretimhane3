@@ -14,6 +14,10 @@ public class InventoryUI : MonoBehaviour
     public List<WeaponType> availableWeapons;
     public List<Button> weaponButtons;
 
+    private bool _isShotGunCollected;
+
+    private WeaponType _activeWeapon;
+
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -31,11 +35,11 @@ public class InventoryUI : MonoBehaviour
         {
             InventoryButtonPressed();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && _activeWeapon != WeaponType.Machinegun)
         {
             MachinegunButtonPressed();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && _isShotGunCollected && _activeWeapon != WeaponType.Shotgun)
         {
             ShotgunButtonPressed();
         }
@@ -98,10 +102,22 @@ public class InventoryUI : MonoBehaviour
     {
         GameDirector.instance.player.weapon.WeaponButtonPressed(WeaponType.Machinegun);
         CloseInventory();
+        _activeWeapon = WeaponType.Machinegun;
     }
     public void ShotgunButtonPressed()
     {
         GameDirector.instance.player.weapon.WeaponButtonPressed(WeaponType.Shotgun);
         CloseInventory();
+        _activeWeapon = WeaponType.Shotgun;
+    }
+
+    internal void WeaponCollected(WeaponType weaponType)
+    {
+        availableWeapons.Add(weaponType);
+        UpdateInventory();
+        if (weaponType == WeaponType.Shotgun)
+        {
+            _isShotGunCollected = true;
+        }
     }
 }

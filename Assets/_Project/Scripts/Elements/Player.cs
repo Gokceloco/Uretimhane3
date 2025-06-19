@@ -59,8 +59,7 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("WeaponCollectable"))
         {
-            gameDirector.inventoryUI.availableWeapons.Add(other.GetComponent<WeaponCollectable>().weaponType);
-            gameDirector.inventoryUI.UpdateInventory();
+            gameDirector.inventoryUI.WeaponCollected(other.GetComponent<WeaponCollectable>().weaponType);
             other.gameObject.SetActive(false);
         }
     }
