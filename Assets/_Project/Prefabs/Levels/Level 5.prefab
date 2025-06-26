@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cd9642afa03c549bfde3b1134f7dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelTimeLimit: 300
 --- !u!114 &4471200600714829159
 MonoBehaviour:
   m_ObjectHideFlags: 0

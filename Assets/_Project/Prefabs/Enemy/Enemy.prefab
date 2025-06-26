@@ -242,7 +242,7 @@ MonoBehaviour:
   enemyState: 0
   startHealth: 10
   attackRate: 3
-  attackRange: 2.5
+  attackRange: 2
   angleThreshold: 100
   deadCollider: {fileID: 3880536999257763027}
   eyeLights:

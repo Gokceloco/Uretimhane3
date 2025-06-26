@@ -11,6 +11,7 @@ public class GameDirector : MonoBehaviour
     public CoinManager coinManager;
     public FXManager fXManager;
     public AudioManager audioManager;
+    public TimerManager timerManager;
     public Player player;
 
     [Header("UI")]
@@ -20,7 +21,8 @@ public class GameDirector : MonoBehaviour
     public MessageUI messageUI;
     public InventoryUI inventoryUI;
     public GreandeCoolDownUI greandeCoolDownUI;
-
+    public VictoryUI victoryUI;
+    public FailUI failUI;
 
     public CameraHolder cameraHolder;
 
@@ -70,18 +72,28 @@ public class GameDirector : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LevelFailed(2);
+        }
     }
 
     public void RestartLevel()
-    {
-        gameState = GameState.GamePlay;
+    {        
         ShowInGameUI();
         levelManager.RestartLevelManager();
         player.RestartPlayer();
         playerHealthUI.Show();
+        Invoke(nameof(ChangeGameStateToGamePlay), .1f);
+        timerManager.LevelStarted(levelManager.GetCurrentLevel().levelTimeLimit);
     }
 
-    void LoadNextLevel()
+    void ChangeGameStateToGamePlay()
+    {
+        gameState = GameState.GamePlay;
+    }
+
+    public void LoadNextLevel()
     {
         if (levelManager.levelNo < levelManager.levels.Count)
         {
@@ -101,12 +113,14 @@ public class GameDirector : MonoBehaviour
 
     public void LevelCompleted()
     {
-        Invoke(nameof(LoadNextLevel), 1f);
+        gameState = GameState.VictoryUI;
+        victoryUI.Show(.5f);
     }
 
-    public void Lose()
+    public void LevelFailed(float delay)
     {
-
+        gameState = GameState.FailUI;
+        failUI.Show(delay);
     }
 
     public void ShowInGameUI()
@@ -120,6 +134,13 @@ public class GameDirector : MonoBehaviour
         coinManager.coinUI.Hide();
         inventoryUI.Hide();
         greandeCoolDownUI.Hide();
+    }
+
+    public void TimeIsUp()
+    {
+        player.TimeIsUp();
+        LevelFailed(2);
+        messageUI.Show("TIME IS UP!", 3);
     }
 }
 

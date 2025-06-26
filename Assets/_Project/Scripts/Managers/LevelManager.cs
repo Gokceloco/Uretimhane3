@@ -30,4 +30,9 @@ public class LevelManager : MonoBehaviour
             Destroy(_curLevel.gameObject);
         }
     }
+
+    public Level GetCurrentLevel()
+    {
+        return _curLevel;
+    }
 }

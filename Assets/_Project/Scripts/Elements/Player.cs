@@ -55,6 +55,15 @@ public class Player : MonoBehaviour
             _lastGrenadeThrowTime = Time.time;
         }
         gameDirector.greandeCoolDownUI.UpdateCoolDownImage((Time.time - _lastGrenadeThrowTime) / grenadeCoolDown);
+
+        if (transform.position.y < -10 && gameDirector.gameState == GameState.GamePlay)
+        {
+            gameDirector.LevelFailed(0);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GetHit();
+        }
     }
 
     private void ThrowGrenade()
@@ -94,7 +103,8 @@ public class Player : MonoBehaviour
         _currentHealth = startHealth;
         gameDirector.playerHealthUI.UpdateHealth(1);
         gameObject.SetActive(true);
-        _playerNavigator.ResetPosition();        
+        _playerNavigator.ResetPosition();
+        _playerAnimator.PlayIdleAnimation();
     }
 
     internal void GetHit()
@@ -117,11 +127,18 @@ public class Player : MonoBehaviour
     private void Die()
     {
         _isDead = true;
-        gameObject.SetActive(false);
+        gameDirector.LevelFailed(2);
+        _playerAnimator.PlayFallBackAnimation();
     }
 
     public void UseKey()
     {
         _haveKey = false;
+    }
+
+    public void TimeIsUp()
+    {
+        _isDead = true;
+        _playerAnimator.PlayFallDownAnimation();
     }
 }

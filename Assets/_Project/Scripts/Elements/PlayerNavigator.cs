@@ -26,6 +26,11 @@ public class PlayerNavigator : MonoBehaviour
     {
         if (GameDirector.instance.gameState != GameState.GamePlay)
         {
+            _rb.linearVelocity = Vector3.zero;
+            if (GameDirector.instance.gameState != GameState.FailUI)
+            {
+                _playerAnimator.PlayIdleAnimation();
+            }
             return;
         }
         MovePlayerWithKeys();

@@ -47,10 +47,23 @@ public class PlayerAnimator : MonoBehaviour
     {
         _animator.SetLayerWeight(1, 0);
     }
+
+    public void PlayFallBackAnimation()
+    {
+        playerAnimationState = PlayerAnimationState.Dead;
+        _animator.SetTrigger("FallBack");
+    }
+
+    public void PlayFallDownAnimation()
+    {
+        playerAnimationState = PlayerAnimationState.Dead;
+        _animator.SetTrigger("FallDown");
+    }
 }
 
 public enum PlayerAnimationState
 {
     Idle,
     Run,
+    Dead,
 }
