@@ -27,6 +27,6 @@ public class VictoryUI : MonoBehaviour
     public void LoadNextLevelButtonPressed()
     {
         Hide();
-        gameDirector.LoadNextLevel();
+        gameDirector.RestartLevel();
     }
 }

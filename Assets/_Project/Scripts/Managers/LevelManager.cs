@@ -9,15 +9,14 @@ public class LevelManager : MonoBehaviour
     public List<Level> levels;
 
     private Level _curLevel;
-    internal void RestartLevelManager()
+    internal void RestartLevelManager(int levelNo)
     {
         DeleteCurrentLevel();
-        CreateNewLevel();
+        CreateNewLevel(levelNo);
     }
 
-    private void CreateNewLevel()
+    private void CreateNewLevel(int levelNo)
     {
-        levelNo = Math.Max(levelNo, 1);
         var newLevel = Instantiate(levels[levelNo - 1]);
         newLevel.transform.position = Vector3.zero;
         _curLevel = newLevel;
@@ -34,5 +33,10 @@ public class LevelManager : MonoBehaviour
     public Level GetCurrentLevel()
     {
         return _curLevel;
+    }
+
+    public void StopEnemies()
+    {
+        _curLevel.StopEnemies();
     }
 }

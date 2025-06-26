@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -40,6 +41,8 @@ public class Enemy : MonoBehaviour
     private Coroutine _getHitCoroutine;
     public float getHitStopDuration;
 
+    private bool _isStopped;
+
     private void Awake()
     {
         _navAgent = GetComponent<NavMeshAgent>();
@@ -59,7 +62,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (enemyState == EnemyState.Dead)
+        if (enemyState == EnemyState.Dead || _isStopped)
         {
             return;
         }
@@ -206,6 +209,11 @@ public class Enemy : MonoBehaviour
         {
             _navAgent.isStopped = false;
         }
+    }
+
+    public void StopEnemy()
+    {
+        _isStopped = true;
     }
 }
 public enum EnemyState

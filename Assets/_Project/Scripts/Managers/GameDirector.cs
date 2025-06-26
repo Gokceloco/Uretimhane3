@@ -23,6 +23,7 @@ public class GameDirector : MonoBehaviour
     public GreandeCoolDownUI greandeCoolDownUI;
     public VictoryUI victoryUI;
     public FailUI failUI;
+    public TimerUI timerUI;
 
     public CameraHolder cameraHolder;
 
@@ -37,7 +38,10 @@ public class GameDirector : MonoBehaviour
     {
         gameState = GameState.MainMenu;
         HideInGameUI();
-
+        if (PlayerPrefs.GetInt("LastReachedLevel") < 1)
+        {
+            PlayerPrefs.SetInt("LastReachedLevel", 1);
+        }
     }
 
     private void Update()
@@ -74,18 +78,20 @@ public class GameDirector : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            LevelFailed(2);
+            ResetPlayerPrefs();
         }
     }
 
     public void RestartLevel()
-    {        
+    {
+        coinManager.ResetCoinManager();
         ShowInGameUI();
-        levelManager.RestartLevelManager();
+        levelManager.RestartLevelManager(PlayerPrefs.GetInt("LastReachedLevel"));
         player.RestartPlayer();
         playerHealthUI.Show();
         Invoke(nameof(ChangeGameStateToGamePlay), .1f);
         timerManager.LevelStarted(levelManager.GetCurrentLevel().levelTimeLimit);
+        inventoryUI.RestartInventoryUI();
     }
 
     void ChangeGameStateToGamePlay()
@@ -95,32 +101,31 @@ public class GameDirector : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (levelManager.levelNo < levelManager.levels.Count)
-        {
-            levelManager.levelNo += 1;
-        }        
+        PlayerPrefs.SetInt("LastReachedLevel", PlayerPrefs.GetInt("LastReachedLevel") + 1);   
         RestartLevel();
     }
 
     void LoadPreviousLevel()
     {
-        if (levelManager.levelNo > 1)
-        {
-            levelManager.levelNo -= 1;
-        }
+        PlayerPrefs.SetInt("LastReachedLevel", PlayerPrefs.GetInt("LastReachedLevel") - 1);
         RestartLevel();
     }
 
     public void LevelCompleted()
     {
+        PlayerPrefs.SetInt("LastReachedLevel", PlayerPrefs.GetInt("LastReachedLevel") + 1);
         gameState = GameState.VictoryUI;
         victoryUI.Show(.5f);
+        levelManager.StopEnemies();
+        HideInGameUI();
     }
 
     public void LevelFailed(float delay)
     {
         gameState = GameState.FailUI;
         failUI.Show(delay);
+        levelManager.StopEnemies();
+        HideInGameUI();
     }
 
     public void ShowInGameUI()
@@ -128,12 +133,14 @@ public class GameDirector : MonoBehaviour
         coinManager.coinUI.Show();
         inventoryUI.Show();
         greandeCoolDownUI.Show();
+        timerUI.Show();
     }
     public void HideInGameUI()
     {
         coinManager.coinUI.Hide();
         inventoryUI.Hide();
         greandeCoolDownUI.Hide();
+        timerUI.Hide();
     }
 
     public void TimeIsUp()
@@ -141,6 +148,13 @@ public class GameDirector : MonoBehaviour
         player.TimeIsUp();
         LevelFailed(2);
         messageUI.Show("TIME IS UP!", 3);
+    }
+
+    void ResetPlayerPrefs()
+    {
+        PlayerPrefs.SetInt("LastReachedLevel", 1);
+        PlayerPrefs.SetInt("ShotgunCollected", 0);
+        PlayerPrefs.SetInt("CoinCount", 0);
     }
 }
 

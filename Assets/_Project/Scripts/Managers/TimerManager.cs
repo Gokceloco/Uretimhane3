@@ -6,6 +6,8 @@ public class TimerManager : MonoBehaviour
     private float _levelStartTime;
     private float _currentLevelTimeLimit;
 
+    public TimerUI timerUI;
+
     public void LevelStarted(float curLevelTime)
     {
         _currentLevelTimeLimit = curLevelTime;
@@ -20,7 +22,9 @@ public class TimerManager : MonoBehaviour
             {
                 gameDirector.TimeIsUp();
             }
-            print(Time.time - _levelStartTime);
+            var elapsedTime = Time.time - _levelStartTime;
+            var remainingTime = _currentLevelTimeLimit - elapsedTime;
+            timerUI.UpdateTimer(remainingTime / _currentLevelTimeLimit, Mathf.CeilToInt(remainingTime));
         }
     }
 }

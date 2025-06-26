@@ -23,6 +23,19 @@ public class InventoryUI : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
+    public void RestartInventoryUI()
+    {
+        if (PlayerPrefs.GetInt("ShotgunCollected") == 1)
+        {
+            if (!availableWeapons.Contains(WeaponType.Shotgun))
+            {
+                availableWeapons.Add(WeaponType.Shotgun);
+            }
+            UpdateInventory();
+            _isShotGunCollected = true;            
+        }
+    }
+
     private void Start()
     {
         availableWeapons.Add(WeaponType.Machinegun);

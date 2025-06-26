@@ -6,14 +6,17 @@ public class CoinManager : MonoBehaviour
     public int coinCount;
     public CoinUI coinUI;
 
-    public void RestartCoinCount()
+    public void ResetCoinManager()
     {
-        coinCount = 0;
+        coinCount = PlayerPrefs.GetInt("CoinCount");
+        coinUI.SetCoinCount(coinCount);
     }
+    
     public void CoinCollected()
     {
         coinCount++;
         UpdateCoinCountUI();
+        PlayerPrefs.SetInt("CoinCount", coinCount);
     }
 
     public void UpdateCoinCountUI()
